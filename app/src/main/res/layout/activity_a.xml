@@ -46,4 +46,11 @@
         android:text="注销"
         android:textAllCaps="false"
         />
+    <Button
+        android:id="@+id/customHit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="自定义事件埋点"
+        android:textAllCaps="false"
+        />
 </LinearLayout>

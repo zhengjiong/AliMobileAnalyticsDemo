@@ -7,6 +7,7 @@ import android.os.SystemClock
 import com.alibaba.sdk.android.man.MANPageHitBuilder
 import com.alibaba.sdk.android.man.MANServiceProvider
 import com.zj.example.ali.activity.BActivity
+import com.zj.example.ali.activity.ClassAlias
 
 
 /**
@@ -22,6 +23,11 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        initAliPageHit()
+        initManService()
+    }
+
+    fun initAliPageHit() {
         this.registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
 
             override fun onActivityPaused(activity: Activity) {
@@ -53,7 +59,7 @@ class App : Application() {
             override fun onActivityDestroyed(activity: Activity) {
                 println("onActivityDestroyed=${activity::class.java.simpleName}")
 
-                val pageHitBuilder = MANPageHitBuilder(activity.javaClass.simpleName + "-Page");
+                val pageHitBuilder = MANPageHitBuilder(activity.javaClass.simpleName);
 
                 activityMap[activity.javaClass.simpleName]?.run {
                     pageHitBuilder.setDurationOnPage(this.duration)
@@ -86,10 +92,13 @@ class App : Application() {
 
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 //println("onActivityCreated=${activity::class.java.simpleName}")
+                if (activity.javaClass.isAnnotationPresent(ClassAlias::class.java)) {
+                    val alias = activity.javaClass.getAnnotation(ClassAlias::class.java)
+                    println("alias=" + alias.alias)
+                }
             }
 
         })
-        initManService()
     }
 
     fun initManService() {
@@ -104,12 +113,12 @@ class App : Application() {
         manService.getMANAnalytics().turnOnDebug()
 
         // MAN初始化方法之一
-        manService.getMANAnalytics().init(this, applicationContext)
+        //manService.getMANAnalytics().init(this, applicationContext)
 
         // MAN另一初始化方法，手动指定appKey和appSecret
-//        val appKey = "25235650";
-//        val appSecret = "e1aad755f295e7c2edd73fae26a48f8d";
-//        manService.getMANAnalytics().init(this, this, appKey, appSecret);
+        val appKey = "25253161";
+        val appSecret = "0cbb1a8c6e99c5d226a44fb6a6285632";
+        manService.getMANAnalytics().init(this, this, appKey, appSecret);
 
         // 若需要关闭 SDK 的自动异常捕获功能可进行如下操作,详见文档5.4
         manService.getMANAnalytics().turnOffCrashReporter()
