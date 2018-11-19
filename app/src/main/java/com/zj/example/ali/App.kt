@@ -116,8 +116,8 @@ class App : Application() {
         //manService.getMANAnalytics().init(this, applicationContext)
 
         // MAN另一初始化方法，手动指定appKey和appSecret
-        val appKey = "25253161";
-        val appSecret = "0cbb1a8c6e99c5d226a44fb6a6285632";
+        val appKey = "25230744";
+        val appSecret = "45a5face71db6d32244fa580d602a90c";
         manService.getMANAnalytics().init(this, this, appKey, appSecret);
 
         // 若需要关闭 SDK 的自动异常捕获功能可进行如下操作,详见文档5.4
